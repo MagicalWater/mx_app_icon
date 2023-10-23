@@ -71,7 +71,7 @@ void _handleArgError(ArgParser parser, [String? msg]) {
 
 ArgParser _initArgParser() {
   return ArgParser()
-    ..addOption('file', abbr: 'f', help: 'json來源檔案')
+    ..addOption('file', abbr: 'f', help: 'image來源檔案')
     ..addOption(
       'target_dir',
       abbr: 't',

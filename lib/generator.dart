@@ -49,6 +49,7 @@ class MxAppIconGenerator {
           imageBytes,
           imageSize,
           imageSize,
+          removeAlpha: true,
         );
         final imageName = size.iconName(multiple);
 

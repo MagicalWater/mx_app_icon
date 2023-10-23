@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:image/image.dart';
 
+import 'image_format_detector.dart';
+
 /// 圖片工具
 class MxImageUtil {
   /// 檢查是否有alpha通道
@@ -16,7 +18,7 @@ class MxImageUtil {
   }
 
   /// 去除圖片的alpha通道
-  static Uint8List removeImageAlpha(Uint8List imageBytes) {
+  static Image removeImageAlpha(Uint8List imageBytes) {
     // Load the image
     final image = decodeImage(imageBytes);
     if (image == null) {
@@ -24,7 +26,7 @@ class MxImageUtil {
       throw Exception('Failed to load image.');
     }
 
-    return _removeImageAlpha(image).getBytes();
+    return _removeImageAlpha(image);
   }
 
   /// 重新調整圖片大小
@@ -49,12 +51,35 @@ class MxImageUtil {
     }
 
     // Resize the image to a 120x? thumbnail (maintaining the aspect ratio).
-    return copyResize(
+    image = copyResize(
       image,
       width: width,
       height: height,
       backgroundColor: backgroundColor,
-    ).getBytes();
+    );
+
+    // 取得圖片格式
+    final imageFormat = ImageFormatDetector.detect(imageBytes);
+
+    switch (imageFormat) {
+      case ImageFormat.jpg:
+        return encodeJpg(image);
+      case ImageFormat.png:
+        return encodePng(image);
+      case ImageFormat.apng:
+        return encodePng(image);
+      case ImageFormat.gif:
+        return encodeGif(image);
+      case ImageFormat.bmp:
+        return encodeBmp(image);
+      case ImageFormat.tiff:
+        return encodeTiff(image);
+      case ImageFormat.ico:
+        return encodeIco(image);
+      default:
+        // 其餘格式暫時不支持
+        throw Exception('Unsupported image format. ($imageFormat)');
+    }
   }
 
   /// 去除圖片的alpha通道
