@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
+import 'package:mx_app_icon/color_parse.dart';
 import 'package:mx_app_icon/mx_app_icon.dart' as mx_app_icon;
 
 void main(List<String> arguments) {
@@ -23,6 +24,13 @@ void main(List<String> arguments) {
   final filePath = result['file'];
   final platform = result['platform'];
   final targetDir = result['target_dir'];
+  final background = result['background'];
+
+  ColorParser? colorParser;
+
+  if (background != null) {
+    colorParser = ColorParser.parse(background);
+  }
 
   if (targetDir == null || targetDir.isEmpty) {
     stderr.write('-d: 目標資料夾 為必填\n');
@@ -53,9 +61,17 @@ void main(List<String> arguments) {
     if (dir.existsSync()) {
       dir.deleteSync(recursive: true);
     }
-    generator.generateIosIcon(file.readAsBytesSync(), dir);
+    generator.generateIosIcon(
+      file.readAsBytesSync(),
+      dir,
+      colorParser?.toColor(),
+    );
   } else if (platform == 'android') {
-    generator.generateAndroidIcon(file.readAsBytesSync(), dir);
+    generator.generateAndroidIcon(
+      file.readAsBytesSync(),
+      dir,
+      colorParser?.toColor(),
+    );
   } else {
     stderr.write('-p: 生成平台參數錯誤, 只允許 ios 或 android\n');
   }
@@ -78,5 +94,6 @@ ArgParser _initArgParser() {
       help: '目標資料夾, ios指向AppIcon.appiconset, android指向res',
     )
     ..addOption('platform', abbr: 'p', help: '平台 ios/android')
+    ..addOption('background', abbr: 'b', help: '背景顏色(16位argb), 格式: #FFRRGGBB')
     ..addFlag('help', abbr: 'h', help: '說明');
 }

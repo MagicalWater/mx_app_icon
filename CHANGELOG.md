@@ -1,3 +1,7 @@
+## 1.0.3
+- Add a 'background' parameter for setting the background color.
+- Fix the issue where the 'backgroundColor' parameter in MxImageUtil.resizeImage doesn't take effect.
+
 ## 1.0.2
 - change required SDK version => ^3.0.6
 

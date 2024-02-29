@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:decimal/decimal.dart';
+import 'package:image/image.dart';
 
 import 'bean/ios_icon_struct/ios_icon_struct.dart';
 
@@ -24,7 +25,11 @@ class MxAppIconGenerator {
   /// 76x76(x2)
   /// 83.5x83.5(x2)
   /// 1024x1024
-  void generateIosIcon(Uint8List imageBytes, Directory targetDir) {
+  void generateIosIcon(
+    Uint8List imageBytes,
+    Directory targetDir,
+    Color? backgroundColor,
+  ) {
     final sizeList = [
       IosIconSize(size: 20, multiple: [2, 3]),
       IosIconSize(size: 29, multiple: [2, 3]),
@@ -50,6 +55,7 @@ class MxAppIconGenerator {
           imageSize,
           imageSize,
           removeAlpha: true,
+          backgroundColor: backgroundColor,
         );
         final imageName = size.iconName(multiple);
 
@@ -94,7 +100,11 @@ class MxAppIconGenerator {
   /// mipmap-xhdpi => 96x96
   /// mipmap-xxhdpi => 144x144
   /// mipmap-xxxhdpi => 192x192
-  void generateAndroidIcon(Uint8List imageBytes, Directory targetDir) {
+  void generateAndroidIcon(
+    Uint8List imageBytes,
+    Directory targetDir,
+    Color? backgroundColor,
+  ) {
     final sizeList = [
       AndroidIconSize(size: 48, name: 'mipmap-mdpi'),
       AndroidIconSize(size: 72, name: 'mipmap-hdpi'),
@@ -108,6 +118,8 @@ class MxAppIconGenerator {
         imageBytes,
         size.size,
         size.size,
+        removeAlpha: false,
+        backgroundColor: backgroundColor,
       );
 
       // 先創建資料夾, 若有需要

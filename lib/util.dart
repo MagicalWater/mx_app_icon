@@ -46,17 +46,24 @@ class MxImageUtil {
       throw Exception('Failed to load image.');
     }
 
+    if (backgroundColor != null) {
+      // 填補背景
+      final background = Image(
+        width: image.width,
+        height: image.height,
+        numChannels: image.numChannels,
+      );
+      fill(background, color: backgroundColor);
+      image = compositeImage(background, image);
+    }
+
     if (removeAlpha && image.hasAlpha) {
       image = _removeImageAlpha(image);
     }
 
     // Resize the image to a 120x? thumbnail (maintaining the aspect ratio).
-    image = copyResize(
-      image,
-      width: width,
-      height: height,
-      backgroundColor: backgroundColor,
-    );
+
+    image = copyResize(image, width: width, height: height);
 
     // 取得圖片格式
     final imageFormat = ImageFormatDetector.detect(imageBytes);
