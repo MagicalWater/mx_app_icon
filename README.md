@@ -42,13 +42,14 @@ void main(List<String> args) {
 
 2. Running
 
-        mx_app_icon -f {imagePath} -p ios -t {targetDir}
+        mx_app_icon -f {imagePath} -p ios -t {targetDir} -b #FFFFFF
 
 3. Command Line Arguments
     ```shell script
     -f, --file           image source file
     -t, --target_dir     target folder points to 'AppIcon.appiconset' for iOS and 'res' for Android.
     -p, --platform       platform (ios/android)
+    -b, --background     background color
     -h, --[no-]help      description
     ```
 

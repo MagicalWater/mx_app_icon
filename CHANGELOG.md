@@ -1,3 +1,6 @@
+## 1.0.4
+- Fix the issue where the output image is blurry
+
 ## 1.0.3
 - Add a 'background' parameter for setting the background color.
 - Fix the issue where the 'backgroundColor' parameter in MxImageUtil.resizeImage doesn't take effect.

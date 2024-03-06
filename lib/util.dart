@@ -63,7 +63,12 @@ class MxImageUtil {
 
     // Resize the image to a 120x? thumbnail (maintaining the aspect ratio).
 
-    image = copyResize(image, width: width, height: height);
+    image = copyResize(
+      image,
+      width: width,
+      height: height,
+      interpolation: Interpolation.average,
+    );
 
     // 取得圖片格式
     final imageFormat = ImageFormatDetector.detect(imageBytes);
