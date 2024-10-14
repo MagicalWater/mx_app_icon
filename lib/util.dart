@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:image/image.dart';
+import 'package:image/image.dart' hide ImageFormat;
 
 import 'image_format_detector.dart';
 

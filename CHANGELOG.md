@@ -1,3 +1,7 @@
+## 1.1.0
+- Upgrade used dependencies version.
+- Fixed Class: ImageFormat name duplication problem.
+
 ## 1.0.4
 - Fix the issue where the output image is blurry
 
